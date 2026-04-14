@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A Retrieval-Augmented Generation (RAG) system for answering questions about course materials. The system uses ChromaDB for vector storage, sentence-transformers for embeddings, and Anthropic's Claude for AI-powered responses with tool use.
+A Retrieval-Augmented Generation (RAG) system for answering questions about course materials. The system uses ChromaDB for vector storage, sentence-transformers for embeddings, and Claude via Google Vertex AI for AI-powered responses with tool use.
 
 ## Running the Application
 
@@ -31,8 +31,12 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Install dependencies
 uv sync
 
-# Set up environment variables
-# Create .env file with: ANTHROPIC_API_KEY=your_key_here
+# Set up Google Cloud authentication (for Vertex AI)
+gcloud auth application-default login
+
+# Configure environment variables in .env file:
+# GCP_PROJECT_ID=your-gcp-project-id
+# GCP_REGION=us-east5
 ```
 
 ## Architecture
@@ -63,10 +67,11 @@ uv sync
 - Supports filtering by course and lesson number
 
 **AIGenerator** (`backend/ai_generator.py`)
-- Handles Claude API interactions
+- Handles Claude API interactions via Google Vertex AI
 - Implements tool use pattern with automatic tool execution
 - Manages conversation context and system prompts
 - Uses `claude-sonnet-4-20250514` model with temperature=0
+- Authenticates using Google Cloud Application Default Credentials
 
 **ToolManager & CourseSearchTool** (`backend/search_tools.py`)
 - Tool-based architecture following Anthropic's tool use pattern

@@ -8,8 +8,9 @@ load_dotenv()
 @dataclass
 class Config:
     """Configuration settings for the RAG system"""
-    # Anthropic API settings
-    ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
+    # Google Cloud Vertex AI settings
+    GCP_PROJECT_ID: str = os.getenv("GCP_PROJECT_ID", "")
+    GCP_REGION: str = os.getenv("GCP_REGION", "us-east5")
     ANTHROPIC_MODEL: str = "claude-sonnet-4-20250514"
     
     # Embedding model settings
